@@ -19,7 +19,7 @@ jobs:
         run: rm -rf /var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs
 
       - name: Clone repository
-        run: git clone https://github.com/gestionappone/one-landing-form/var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs/
+        run: git clone https://github.com/gestionappone/one-landing-form /var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs/
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_ONE_LANDING }}
 
