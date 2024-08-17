@@ -1,0 +1,41 @@
+name: Admin Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TOKEN_ONE_LANDING }}
+
+      - name: Remove existing directory
+        run: rm -rf /var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs
+
+      - name: Clone repository
+        run: git clone https://github.com/gestionappone/one-landing-form/var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs/
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_ONE_LANDING }}
+
+      - name: Move to repository directory
+        run: cd /var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs/
+
+      - name: Build and push Frontend admin Docker image
+        run: docker build -t one_landing_form /var/www/vhosts/trusting-thompson.213-165-65-237.plesk.page/httpdocs/
+
+      # Limpiar imágenes sin etiquetas
+      - name: Clean Docker images
+        run: docker rmi $(docker images -q -f dangling=true) || true
+
+      # Detener y eliminar el contenedor existente
+      - name: Stop and remove previous container
+        run: docker stop one_landing_form || true && docker rm one_landing_form || true
+
+      - name: Run Docker container
+        run: docker run -d -p 28741:80 --memory=3000m --restart=always --name one_landing_form one_landing_form
