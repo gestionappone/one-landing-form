@@ -1,0 +1,4 @@
+# .husky/pre-push
+
+npm run test:staged
+npm run build
