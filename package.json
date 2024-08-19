@@ -11,8 +11,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky",
-    "test:staged": "vitest --run"
+    "test:staged": "vitest --run",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
