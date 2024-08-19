@@ -23,5 +23,5 @@
     //absolute import
     "baseUrl": "./src"
   },
-  "include": ["src", "./jest.setup.ts"]
+  "include": ["src"]
 }
