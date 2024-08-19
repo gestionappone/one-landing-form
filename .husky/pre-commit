@@ -3,3 +3,4 @@
 
 npx lint-staged
 npx run test:staged
+npm run build
