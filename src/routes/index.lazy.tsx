@@ -78,20 +78,20 @@ function Index() {
     setCurrentStep((prevStep) => prevStep + 1);
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background">
-      <div className="w-full max-w-2xl p-8 bg-card rounded-lg shadow-lg">
-        <div className="mb-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-8">
+      <div className="w-full max-w-4xl p-12 bg-card rounded-lg shadow-lg">
+        <div className="mb-8">
           <Progress value={(currentStep / (steps.length - 1)) * 100} />
         </div>
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold">{currentStepData.title}</h2>
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold">{currentStepData.title}</h2>
           {currentStepData.options.length > 0 ? (
-            <div className="grid gap-4">
+            <div className="grid gap-6">
               {currentStepData.options.map((option) => (
                 <Button
                   key={option.value}
                   variant="outline"
-                  className="justify-start w-full"
+                  className="justify-start w-full h-12 text-lg"
                   onClick={() => handleOptionSelect(option.value)}
                 >
                   {option.label}
@@ -103,6 +103,7 @@ function Index() {
               type="text"
               placeholder={currentStepData.title}
               value={formData[currentStepData.field as keyof typeof formData]}
+              className="w-full h-12 text-lg"
               onChange={handleTextInput}
             />
           )}
