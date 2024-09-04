@@ -18,6 +18,9 @@ import { Route as rootRoute } from './routes/__root';
 
 const IndexLazyImport = createFileRoute('/')();
 const MilestonesIndexLazyImport = createFileRoute('/milestones/')();
+const MilestonesProductsUploadIndexLazyImport = createFileRoute(
+  '/milestones/products-upload/',
+)();
 
 // Create/Update Routes
 
@@ -32,6 +35,16 @@ const MilestonesIndexLazyRoute = MilestonesIndexLazyImport.update({
 } as any).lazy(() =>
   import('./routes/milestones/index.lazy').then((d) => d.Route),
 );
+
+const MilestonesProductsUploadIndexLazyRoute =
+  MilestonesProductsUploadIndexLazyImport.update({
+    path: '/milestones/products-upload/',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/milestones/products-upload/index.lazy').then(
+      (d) => d.Route,
+    ),
+  );
 
 // Populate the FileRoutesByPath interface
 
@@ -51,6 +64,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MilestonesIndexLazyImport;
       parentRoute: typeof rootRoute;
     };
+    '/milestones/products-upload/': {
+      id: '/milestones/products-upload/';
+      path: '/milestones/products-upload';
+      fullPath: '/milestones/products-upload';
+      preLoaderRoute: typeof MilestonesProductsUploadIndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
@@ -59,6 +79,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   MilestonesIndexLazyRoute,
+  MilestonesProductsUploadIndexLazyRoute,
 });
 
 /* prettier-ignore-end */
@@ -70,7 +91,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/milestones/"
+        "/milestones/",
+        "/milestones/products-upload/"
       ]
     },
     "/": {
@@ -78,6 +100,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/milestones/": {
       "filePath": "milestones/index.lazy.tsx"
+    },
+    "/milestones/products-upload/": {
+      "filePath": "milestones/products-upload/index.lazy.tsx"
     }
   }
 }
